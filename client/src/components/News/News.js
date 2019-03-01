@@ -1,33 +1,58 @@
 import React, { Component } from 'react';
 import NewSingle from './NewSingle';
+import Error from './Error';
 
 class News extends Component {
 
   state = {
-    news: []
+    news: [],
+    error: false
+    
   };
 
-  componentDidMount = async () => {
-  
-      const url = `https://newsapi.org/v2/${this.props.news.type}?${this.props.news.query}&language=en${this.props.news.page}&apiKey=0d42dd3174a94b2e9d0fe5f90fe7ee47`;
+getNews = async () => {
+      try {
+       
+        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${this.props.search.query}&language=en${this.props.news.page}&sortBy=popularity&apiKey=5e521ee186464149bdab88068f856c3c`;
 
-      let res = await fetch(url);
-      let data = await res.json();
-      console.log(data)
-      this.setState({
-        news: data.articles
-      })
+        // console.log(url)
+        let res = await fetch(url);
+        let data = await res.json();
+        // console.log(data)
+        this.setState({
+          news: data.articles
+
+        });   
+      } catch (error) {
+          this.setState({
+            error: true
+          })
+      } 
+  };
+
+  componentWillReceiveProps() {
+    this.getNews()
+  };
+  componentDidMount() {
+    this.getNews();
   }
 
   renderItems() {
-        return this.state.news.map(item => (
-            <NewSingle key={item.url} item={item} />
-        ));
+    if(!this.state.error && this.getNews) {
+      return this.state.news.map(item => (
+        <NewSingle key={item.url} item={item} />
+    ));
+    } else {
+      return <Error />
     }
+    }
+    
   render() {
     return (
       
       <div className="container">
+      <h2>Top Headlines</h2>
+          <em>app in development!</em>   
       <hr />
             <div className="row">
                 {this.renderItems()}
@@ -36,5 +61,4 @@ class News extends Component {
     )
   }
 }
-
 export default News

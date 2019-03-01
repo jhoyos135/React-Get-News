@@ -42,3 +42,9 @@
   height: 300px;
   object-fit: cover;
 }
+
+.close {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}

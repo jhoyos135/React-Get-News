@@ -13,8 +13,7 @@ const NewSingle = ({item}) => {
           <span className="card-title activator grey-text text-darken-4" style={{fontSize:"18px"}}><i className="material-icons right">more_vert</i>
           {item.title}
           </span>
-          <p><a href={item.url} target="_blank">LINK TO FULL ARTICLE
-            </a></p>
+          <p> {item.source.name} </p>
         </div>
         <div className="card-reveal">
           <span className="card-title grey-text text-darken-4">{item.title}<i className="material-icons right">close</i></span>
