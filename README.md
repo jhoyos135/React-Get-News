@@ -10,7 +10,7 @@ _ npm run dev
 
 node\
 react\
-concurrently\
+concurrently
 
 # Api 
 
