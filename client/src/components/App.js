@@ -25,7 +25,7 @@ class App extends Component {
       search: {
         query: input
       }
-    })
+    });
     
   };
 

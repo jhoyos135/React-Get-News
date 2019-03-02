@@ -6,14 +6,14 @@ class News extends Component {
 
   state = {
     news: [],
-    error: false
-    
+    error: false    
   };
 
-getNews = async () => {
+getNews = async (values) => {
+  // console.log(NewQuery)
       try {
        
-        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${this.props.search.query}&language=en${this.props.news.page}&sortBy=popularity&apiKey=5e521ee186464149bdab88068f856c3c`;
+        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&language=en${this.props.news.page}&sortBy=popularity&apiKey=5e521ee186464149bdab88068f856c3c`;
 
         // console.log(url)
         let res = await fetch(url);
@@ -23,6 +23,7 @@ getNews = async () => {
           news: data.articles
 
         });   
+
       } catch (error) {
           this.setState({
             error: true
@@ -30,11 +31,12 @@ getNews = async () => {
       } 
   };
 
-  componentWillReceiveProps() {
-    this.getNews()
-  };
+  componentWillReceiveProps(nextProps) {
+    const NextQuery = nextProps.search.query;
+    this.getNews(NextQuery);
+  }
   componentDidMount() {
-    this.getNews();
+    this.getNews('');
   }
 
   renderItems() {
