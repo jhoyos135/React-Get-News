@@ -13,7 +13,7 @@ getNews = async (values) => {
   // console.log(NewQuery)
       try {
        
-        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&language=en${this.props.news.page}&sortBy=popularity&apiKey=5e521ee186464149bdab88068f856c3c`;
+        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&country=us&page=${this.props.news.page}&sortBy=popularity&apiKey=0d42dd3174a94b2e9d0fe5f90fe7ee47`;
 
         // console.log(url)
         let res = await fetch(url);
@@ -40,7 +40,7 @@ getNews = async (values) => {
   }
 
   renderItems() {
-    if(!this.state.error && this.getNews) {
+    if(!this.state.error) {
       return this.state.news.map(item => (
         <NewSingle key={item.url} item={item} />
     ));
@@ -53,9 +53,8 @@ getNews = async (values) => {
     return (
       
       <div className="container">
-      <h2>Top Headlines</h2>
+      <h4>Top Headlines</h4>
           <em>app in development!</em>   
-      <hr />
             <div className="row">
                 {this.renderItems()}
             </div>

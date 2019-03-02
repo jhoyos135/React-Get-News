@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import News from './News/News';
+import logo from './Logo.png';
 import Sidenews from './News/Sidenews';
 
 class App extends Component {
@@ -8,7 +9,7 @@ class App extends Component {
   state = {
     news1: {
       type: 'top-headlines',
-      page: '&page=1'
+      page: 1
     },
     news2: {
       type: 'everything',
@@ -37,20 +38,22 @@ class App extends Component {
       <div className="navbar-fixed">
   <nav>
     <div className="nav-wrapper indigo">
-      <form onSubmit={
+      <form>
+        <div className="input-field">
+          <input id="search" type="search" 
+          ref = {input => this.query = input}
+          placeholder="What news are you looking for?"
+          onChange={
             (e) => {
               e.preventDefault()
               this.searchNews();
               
             }
-          }>
-        <div className="input-field">
-          <input id="search" type="search" 
-          ref = {input => this.query = input}
-          placeholder="What news are you looking for?" />
+          }
+           />
 
           <label className="label-icon" for="search"><i className="material-icons">search</i></label>
-          <i className="material-icons close">close<button type="submit" className="indigo btn input-group-addon btn">search</button></i>
+          <i className="material-icons close">close</i>
           
         </div>
       </form>
@@ -59,6 +62,14 @@ class App extends Component {
       </div>
 
       <div className="row">
+        <header>
+          <h1>
+            <a href="http://juliandhoyos.com" target='_blank'><img src={logo} alt=""/>
+            </a>
+            Get News
+          </h1>
+        </header>
+        <hr />
         <div className="col s9">
         <News 
         news={this.state.news1}
