@@ -12,7 +12,7 @@ class News extends Component {
   componentDidMount = async () => {
 
       try {
-        const url = `https://newsapi.org/v2/${this.props.news.type}?${this.props.news.singleQuery}&language=en&apiKey=5e521ee186464149bdab88068f856c3c`;
+        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${this.props.news.singleQuery}&language=en&apiKey=5e521ee186464149bdab88068f856c3c`;
 
         let res = await fetch(url);
         let data = await res.json();
