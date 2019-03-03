@@ -40,7 +40,7 @@ class News extends Component {
     return (
       
       <div className="container">
-      <h4>Trending</h4>
+      <h4>Top Headlines</h4>
             <div className="row">
                 {this.renderItems()}
             </div>

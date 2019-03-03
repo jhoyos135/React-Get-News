@@ -13,7 +13,7 @@ getNews = async (values) => {
   // console.log(NewQuery)
       try {
        
-        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&country=us&page=${this.props.news.page}&sortBy=popularity&apiKey=0d42dd3174a94b2e9d0fe5f90fe7ee47`;
+        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&sortBy=popularity&page=${this.props.news.page}&apiKey=0d42dd3174a94b2e9d0fe5f90fe7ee47`;
 
         // console.log(url)
         let res = await fetch(url);
@@ -36,7 +36,7 @@ getNews = async (values) => {
     this.getNews(NextQuery);
   }
   componentDidMount() {
-    this.getNews('');
+    this.getNews('trending');
   }
 
   renderItems() {
@@ -53,8 +53,7 @@ getNews = async (values) => {
     return (
       
       <div className="container">
-      <h4>Top Headlines</h4>
-          <em>app in development!</em>   
+
             <div className="row">
                 {this.renderItems()}
             </div>

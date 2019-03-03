@@ -8,12 +8,12 @@ class App extends Component {
 
   state = {
     news1: {
-      type: 'top-headlines',
+      type: 'everything',
       page: 1
     },
     news2: {
-      type: 'everything',
-      singleQuery: 'q=trending'
+      type: 'top-headlines',
+      singleQuery: ''
     },
     search: {
       query: ''
@@ -22,11 +22,20 @@ class App extends Component {
 
   searchNews = (input) => {
     input = this.query.value;
-    this.setState({
-      search: {
-        query: input
-      }
-    });
+    if(input < 1) {
+      this.setState({
+        search: {
+          query: 'trending'
+        }
+      });
+    } else {
+      this.setState({
+        search: {
+          query: input
+        }
+      });
+    }
+
     
   };
 
@@ -68,9 +77,10 @@ class App extends Component {
             </a>
             Get News
           </h1>
+          <em>app in development!</em>   
         </header>
-        <hr />
-        <div className="col s9">
+
+        <div className="col s9 left_side">
         <News 
         news={this.state.news1}
         search={this.state.search}

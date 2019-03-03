@@ -35,7 +35,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  height: 500px;
+  height: 550px;
 }
 
 .custom_img {
@@ -53,5 +53,17 @@ header img {
   height: 75px;
   width: 75px;
   vertical-align: middle;
+}
+
+h1 {
+  margin: 0;
+  padding: 15px;
+  background: #3f51b5;
+  color: white;
+}
+
+.left_side {
+  border-right: 1px solid black;
+  margin-top: 15px !important;
 }
 
