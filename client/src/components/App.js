@@ -8,8 +8,7 @@ class App extends Component {
 
   state = {
     news1: {
-      type: 'everything',
-      page: 1
+      type: 'everything'
     },
     news2: {
       type: 'top-headlines',
@@ -17,6 +16,9 @@ class App extends Component {
     },
     search: {
       query: ''
+    },
+    page: {
+      number: 1
     }
   };
 
@@ -26,18 +28,55 @@ class App extends Component {
       this.setState({
         search: {
           query: 'trending'
+        },
+        page: {
+          number: 1
         }
       });
     } else {
       this.setState({
         search: {
           query: input
+        },
+        page: {
+          number: 1
         }
       });
     }
-
-    
+    document.querySelector('.prev').classList.add('disabled');
   };
+
+  up = () => {
+    let next = this.state.page.number
+    this.setState({
+
+      page: {
+        number: next + 1
+      }
+    })
+  };
+  down = () => {
+    let prev = this.state.page.number
+    this.setState({
+
+      page: {
+        number: prev - 1
+      }
+    })
+  }
+  prev = () => {
+    if(this.state.page.number !== 1) {
+      this.down();
+    }
+    if(this.state.page.number === 1) {
+      document.querySelector('.prev').classList.add('disabled');
+      
+    }
+  }
+  next = () => {
+    document.querySelector('.prev').classList.remove('disabled');
+    this.up()
+  }
 
   render() {
     
@@ -56,7 +95,6 @@ class App extends Component {
             (e) => {
               e.preventDefault()
               this.searchNews();
-              
             }
           }
            />
@@ -84,17 +122,33 @@ class App extends Component {
         <News 
         news={this.state.news1}
         search={this.state.search}
+        page={this.state.page}
+        
         />
 
-      <ul class="pagination">
-        <li class="disabled prev">
-          <a href="#!"><i class="material-icons">chevron_left</i></a>
+      <ul className="pagination">
+        <li className="disabled prev"
+        onClick = {
+          (e) => {
+            e.preventDefault();
+            this.prev()
+          }
+        }
+        >
+          <a href="#!"><i className="material-icons">chevron_left</i></a>
         </li>
 
-        <li class="waves-effect next">
-          <a href="#!"><i class="material-icons">chevron_right</i></a>
-        </li>
-      </ul>
+      <li className="waves-effect next"
+        onClick = {
+          (e) => {
+            e.preventDefault();
+            this.next()
+          }
+        }
+      >
+          <a href="#!"><i className="material-icons">chevron_right</i></a>
+      </li>
+    </ul>
 
       </div>
         

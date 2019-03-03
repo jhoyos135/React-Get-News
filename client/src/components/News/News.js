@@ -6,23 +6,30 @@ class News extends Component {
 
   state = {
     news: [],
-    error: false    
+    error: false,
+    page: {
+      number: 1
+    }
   };
+  _isMounted = false;
 
-getNews = async (values) => {
+getNews = async (values, page) => {
+  this._isMounted = true;
   // console.log(NewQuery)
       try {
        
-        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&sortBy=popularity&page=${this.props.news.page}&apiKey=0d42dd3174a94b2e9d0fe5f90fe7ee47`;
+        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&sortBy=popularity&page=${page}&apiKey=5e521ee186464149bdab88068f856c3c`;
 
-        // console.log(url)
+        console.log(url)
         let res = await fetch(url);
         let data = await res.json();
-        console.log(data)
-        this.setState({
-          news: data.articles
-
-        });   
+        // console.log(data)
+        if(this._isMounted) {
+          this.setState({
+            news: data.articles
+  
+          });   
+        }
 
       } catch (error) {
           this.setState({
@@ -33,10 +40,15 @@ getNews = async (values) => {
 
   componentWillReceiveProps(nextProps) {
     const NextQuery = nextProps.search.query;
-    this.getNews(NextQuery);
+    const page = nextProps.page.number;
+    this.getNews(NextQuery, page);
   }
   componentDidMount() {
-    this.getNews('trending');
+    this._isMounted = true;
+    this.getNews('trending', 1);
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   renderItems() {
@@ -44,6 +56,7 @@ getNews = async (values) => {
       return this.state.news.map(item => (
         <NewSingle key={item.url} item={item} />
     ));
+
     } else {
       return <Error />
     }
