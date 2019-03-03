@@ -80,14 +80,25 @@ class App extends Component {
           <em>app in development!</em>   
         </header>
 
-        <div className="col s9 left_side">
+      <div className="col s9 left_side">
         <News 
         news={this.state.news1}
         search={this.state.search}
         />
-        </div>
+
+      <ul class="pagination">
+        <li class="disabled prev">
+          <a href="#!"><i class="material-icons">chevron_left</i></a>
+        </li>
+
+        <li class="waves-effect next">
+          <a href="#!"><i class="material-icons">chevron_right</i></a>
+        </li>
+      </ul>
+
+      </div>
         
-        <div className="col s3">
+      <div className="col s3">
           <Sidenews 
           news={this.state.news2} 
           />

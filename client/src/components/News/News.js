@@ -18,7 +18,7 @@ getNews = async (values) => {
         // console.log(url)
         let res = await fetch(url);
         let data = await res.json();
-        // console.log(data)
+        console.log(data)
         this.setState({
           news: data.articles
 
