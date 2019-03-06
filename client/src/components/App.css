@@ -67,6 +67,18 @@ h1 {
   margin-top: 15px !important;
 }
 
+.pagination {
+  display: flex;
+  justify-content: space-evenly;
+}
+.pagination li i {
+  background: #d3d3d3;
+  
+}
+.pagination li.prev, .pagination li.next {
+  width: 30%;
+}
+
 /*LOADER*/
 
 .loader {

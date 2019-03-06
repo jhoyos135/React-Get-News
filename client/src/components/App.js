@@ -127,7 +127,7 @@ class App extends Component {
           <em>app in development!</em>   
         </header>
 
-      <div className="col s9 left_side">
+      <div className="col s12 m9 left_side">
         
       <ul className="pagination">
         <li className="disabled prev"
@@ -163,7 +163,7 @@ class App extends Component {
 
       </div>
         
-      <div className="col s3">
+      <div className="col s12 m3">
           <Sidenews 
           news={this.state.news2} 
           />
