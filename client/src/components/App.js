@@ -128,13 +128,7 @@ class App extends Component {
         </header>
 
       <div className="col s9 left_side">
-        <News 
-        news={this.state.news1}
-        search={this.state.search}
-        page={this.state.page}
         
-        />
-
       <ul className="pagination">
         <li className="disabled prev"
         onClick = {
@@ -158,6 +152,14 @@ class App extends Component {
           <a href="#!"><i className="material-icons">chevron_right</i></a>
       </li>
     </ul>
+
+        <News 
+        news={this.state.news1}
+        search={this.state.search}
+        page={this.state.page}
+        
+        />
+
 
       </div>
         

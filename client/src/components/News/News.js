@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import NewSingle from './NewSingle';
 import Error from './Error';
+import Loader from './Loader';
 
 class News extends Component {
 
   state = {
     news: [],
-    error: false,
-    page: {
-      number: 1
-    }
+    error: false
   };
+
   _isMounted = false;
 
 getNews = async (values, page) => {
@@ -20,7 +19,7 @@ getNews = async (values, page) => {
        
         const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&sortBy=popularity&page=${page}&apiKey=5e521ee186464149bdab88068f856c3c`;
 
-        console.log(url)
+        // console.log(url)
         let res = await fetch(url);
         let data = await res.json();
         // console.log(data)
@@ -52,13 +51,15 @@ getNews = async (values, page) => {
   }
 
   renderItems() {
-    if(!this.state.error) {
+    if(this.state.error) {
+      return <Error />
+    } else if(this.state.news.length === 0 && !this.state.error) {
+      return <Loader />
+    } else {
       return this.state.news.map(item => (
         <NewSingle key={item.url} item={item} />
     ));
-
-    } else {
-      return <Error />
+      
     }
     }
     
