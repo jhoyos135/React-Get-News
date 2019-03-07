@@ -1,35 +1,19 @@
 import React, { Component } from 'react';
 import Singleside from './Singleside';
 import Error from './Error';
+import newsContext from '../contex/news-context';
 
 class News extends Component {
+  static contextType = newsContext;
 
-  state = {
-    sidenews: [],
-    error: false
-  };
-
-  componentDidMount = async () => {
-
-      try {
-        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${this.props.news.singleQuery}&country=us&apiKey=5e521ee186464149bdab88068f856c3c`;
-
-        let res = await fetch(url);
-        let data = await res.json();
-        // console.log(data)
-        this.setState({
-          sidenews: data.articles
-        })  
-      } catch (error) {
-        this.setState({
-          error: true
-        })
-      }
+  componentDidMount() {
+    this.context.getSideNews();
   }
 
   renderItems() {
-      if(!this.state.error) {
-        return this.state.sidenews.map(item => (
+    let articles = this.context.news2.sidenews
+      if(!this.context.error) {
+        return articles.map(item => (
           <Singleside key={item.url} item={item} />
       ));
       } else {

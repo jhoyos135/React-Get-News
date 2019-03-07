@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Loader extends Component {
-  render() {
+const Loader = () => {
+ 
     return (
       <div className="col s12">
       <div class="loader">
@@ -19,7 +19,7 @@ class Loader extends Component {
     </div>
       </div>
     )
-  }
+  
 }
 
 export default Loader

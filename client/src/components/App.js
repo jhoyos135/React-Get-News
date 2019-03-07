@@ -3,118 +3,23 @@ import './App.css';
 import News from './News/News';
 import logo from './Logo.png';
 import Sidenews from './News/Sidenews';
+import Pagination from './News/Pagination';
+import Nav from './News/Nav';
+import GlobalState from './contex/GlobalState';
+
 
 class App extends Component {
-
-  state = {
-    news1: {
-      type: 'everything'
-    },
-    news2: {
-      type: 'top-headlines',
-      singleQuery: ''
-    },
-    search: {
-      query: ''
-    },
-    page: {
-      number: 1
-    }
-  };
-
-  searchNews = (input) => {
-    input = this.query.value;
-    if(input < 1) {
-      this.setState({
-        search: {
-          query: 'trending'
-        },
-        page: {
-          number: 1
-        }
-      });
-    } else {
-      this.setState({
-        search: {
-          query: input
-        },
-        page: {
-          number: 1
-        }
-      });
-    }
-    document.querySelector('.prev').classList.add('disabled');
-  };
-
-  up = () => {
-    let next = this.state.page.number
-    let search = document.querySelector('#search').value;
-    if(search === '') {
-      this.setState({
-        search: {
-          query: 'trending'
-        },
-        page: {
-          number: next + 1
-        }
-      })
-    };
-    this.setState({
-      page: {
-        number: next + 1
-      }
-    })
-
-  };
-  down = () => {
-    let prev = this.state.page.number
-    this.setState({
-      page: {
-        number: prev - 1
-      }
-    })
-  };
-  prev = () => {
-    if(this.state.page.number !== 1) {
-      this.down();
-    }
-    if(this.state.page.number === 1) {
-      document.querySelector('.prev').classList.add('disabled');
-    }
-  }
-  next = () => {
-    document.querySelector('.prev').classList.remove('disabled');
-    this.up()
-  }
 
   render() {
     
     return (
+
+      <GlobalState>
+      
       <div className="App container-fluid">
 
       <div className="navbar-fixed">
-  <nav>
-    <div className="nav-wrapper indigo">
-      <form>
-        <div className="input-field">
-          <input id="search" type="search" 
-          ref = {input => this.query = input}
-          placeholder="What news are you looking for?"
-          onChange={
-            (e) => {
-              e.preventDefault()
-              this.searchNews();
-            }
-          }
-           />
-
-          <label className="label-icon" for="search"><i className="material-icons">search</i></label>
-          <i className="material-icons close">close</i>
-          
-        </div>
-      </form>
-    </div>
-  </nav>
+       <Nav />
       </div>
 
       <div className="row">
@@ -128,46 +33,13 @@ class App extends Component {
         </header>
 
       <div className="col s12 m9 left_side">
-        
-      <ul className="pagination">
-        <li className="disabled prev"
-        onClick = {
-          (e) => {
-            e.preventDefault();
-            this.prev()
-          }
-        }
-        >
-          <a href="#!"><i className="material-icons">chevron_left</i></a>
-        </li>
-
-      <li className="waves-effect next"
-        onClick = {
-          (e) => {
-            e.preventDefault();
-            this.next()
-          }
-        }
-      >
-          <a href="#!"><i className="material-icons">chevron_right</i></a>
-      </li>
-    </ul>
-
-        <News 
-        news={this.state.news1}
-        search={this.state.search}
-        page={this.state.page}
-        
-        />
-
-
+            <Pagination />
+            <News/>
       </div>
         
       <div className="col s12 m3">
-          <Sidenews 
-          news={this.state.news2} 
-          />
-        </div>
+            <Sidenews />
+      </div>
       </div>
 
       <footer className="page-footer indigo">
@@ -184,6 +56,9 @@ class App extends Component {
       </footer>
 
       </div>
+
+      </GlobalState>
+
     );
   }
 }
