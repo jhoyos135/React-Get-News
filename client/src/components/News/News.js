@@ -17,7 +17,7 @@ getNews = async (values, page) => {
   // console.log(NewQuery)
       try {
        
-        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&sortBy=popularity&page=${page}&apiKey=5e521ee186464149bdab88068f856c3c`;
+        const url = `https://newsapi.org/v2/${this.props.news.type}?q=${values}&sortBy=popularity&page=${page}&apiKey=0d42dd3174a94b2e9d0fe5f90fe7ee47`;
 
         // console.log(url)
         let res = await fetch(url);
