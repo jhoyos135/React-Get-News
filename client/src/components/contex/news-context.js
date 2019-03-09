@@ -15,9 +15,10 @@ export default React.createContext({
       number: 1
     },
     searchNews: input => {},
-    getNews: (values, page) => {},
+    getNews: (query, page) => {},
     up: () => {},
     down: () => {},
     prev: () => {},
     next: () => {}
+  
 });

@@ -4,15 +4,16 @@ import newsContext from '../contex/news-context';
 
 
 class Pagination extends Component {
+
   static contextType = newsContext;
+  _isMounted = false;
 
-  componentWillReceiveProps() {
-      let page = this.context.page.number;
-      let query = this.context.search.query;
-      console.log(page, query)
-    // this.context.getNews('trending', page);
-  }
+componentWillUnmount() {
+    this._isMounted = false;
+  };
 
+  
+  
   render() {
     return (
     <div>

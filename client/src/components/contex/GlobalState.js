@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import NewsContext from './news-context';
 
 class GlobalState extends Component {
-    _isMounted = false;
 
     state = {
         news1: {
@@ -16,7 +16,7 @@ class GlobalState extends Component {
           sidenews: []
         },
         search: {
-          query: ''
+          query: 'trending'
         },
         page: {
           number: 1
@@ -24,24 +24,27 @@ class GlobalState extends Component {
       };
 
       getNews = async (values, page) => {
-        this._isMounted = true;
         // console.log(NewQuery)
             try {
              
-              const url = `https://newsapi.org/v2/${this.state.news1.type}?q=${values}&sortBy=popularity&page=${page}&apiKey=5e521ee186464149bdab88068f856c3c`;
-      
-              // console.log(url)
+              const url = `https://newsapi.org/v2/everything?q=${values}&sortBy=popularity&page=${page}&apiKey=5e521ee186464149bdab88068f856c3c`;
+              console.log(url)
+              
+                      
+              console.log('running')
               let res = await fetch(url);
               let data = await res.json();
+              let articles = data.articles;
               // console.log(data.articles)
-              if(this._isMounted) {
-                this.setState({
-                  news1: {
-                    articles: data.articles
-                  },
-        
-                });   
-              }
+              
+              this.setState({
+                news1: {
+                  articles: articles
+                 }
+              })
+
+             
+                   
       
             } catch (error) {
                 this.setState({
@@ -50,6 +53,12 @@ class GlobalState extends Component {
             } 
         };
 
+        
+
+        update = () => {
+          
+        }
+
       getSideNews = async () => {
             
         try {
@@ -57,7 +66,7 @@ class GlobalState extends Component {
 
           let res = await fetch(url);
           let data = await res.json();
-          // console.log(data)
+          // console.log(url)
           this.setState({
             news2: {
               sidenews: data.articles
@@ -70,52 +79,60 @@ class GlobalState extends Component {
         }
         }
 
-      searchNews = (input) => {
-        input = this.query.value;
-        if(input < 1) {
+        searchNews = (input) => {
+          if(input < 1) {
+            this.setState({
+              search: {
+                query: 'trending'
+              },
+              page: {
+                number: 1
+              }
+            });
+            
+          } else {
+            this.setState({
+              search: {
+                query: input
+              },
+              page: {
+                number: 1
+              }
+            });
+          }
+          
+          document.querySelector('.prev').classList.add('disabled');
+        };
+    
+      up = () => {
+        let next = this.state.page.number;
+        let query = this.state.search.query;
+    
+        // let search = document.querySelector('#search').value;
+        if(query === '') {
           this.setState({
             search: {
               query: 'trending'
             },
             page: {
-              number: 1
+              number: next + 1
             }
-          });
-        } else {
+          })
+         
+        }else {
           this.setState({
-            search: {
-              query: input
-            },
             page: {
-              number: 1
+              number: next + 1
             }
-          });
-        }
-        // document.querySelector('.prev').classList.add('disabled');
-      };
-    
-      up = () => {
-        let next = this.state.page.number
-        // let search = document.querySelector('#search').value;
-        // if(search === '') {
-        //   this.setState({
-        //     search: {
-        //       query: 'trending'
-        //     },
-        //     page: {
-        //       number: next + 1
-        //     }
-        //   })
-        // };
-        this.setState({
-          page: {
-            number: next + 1
-          }
-        })
-    
+          })
+        }        
+        document.querySelector('.prev').classList.remove('disabled');
+        
+
       };
       down = () => {
-        let prev = this.state.page.number
+        let prev = this.state.page.number;
+        let page = this.state.page.number;
         this.setState({
           page: {
             number: prev - 1
@@ -125,15 +142,24 @@ class GlobalState extends Component {
       prev = () => {
         if(this.state.page.number !== 1) {
           this.down();
+
         }
         if(this.state.page.number === 1) {
-          // document.querySelector('.prev').classList.add('disabled');
+          document.querySelector('.prev').classList.add('disabled');
         }
       }
       next = () => {
-        // document.querySelector('.prev').classList.remove('disabled');
-        this.up()
+        this.up();
       }
+      
+
+      componentDidUpdate(...nextState) {
+        process.nextTick( () => {
+          let page = nextState[1].page.number;
+          let query = nextState[1].search.query;
+          this.getNews(query, page)
+        })
+        }
 
   render() {
     return (
@@ -141,14 +167,15 @@ class GlobalState extends Component {
             value={{
                 news1: this.state.news1,
                 news2: this.state.news2,
-                getNews: this.getNews,
                 page: this.state.page,
                 search: this.state.search,
+                getNews: this.getNews,
                 getSideNews: this.getSideNews,
                 searchNews: this.searchNews,
                 prev: this.prev,
                 next: this.next
             }}
+            
         >
             {this.props.children}
         </NewsContext.Provider>

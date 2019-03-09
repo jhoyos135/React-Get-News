@@ -5,8 +5,14 @@ import newsContext from '../contex/news-context';
 
 class Nav extends Component {
 
+  
+
   static contextType = newsContext;
 
+  handleChange = (event) => {
+    const text = event.target.value;
+    this.context.searchNews(text)
+  }
 
   render() {
     return (
@@ -15,14 +21,9 @@ class Nav extends Component {
           <form>
             <div className="input-field">
               <input id="search" type="search" 
-              ref = {input => this.query = input}
+              // ref = {input => this.query = input}
               placeholder="What news are you looking for?"
-              onChange={
-                (e) => {
-                  e.preventDefault()
-                  this.searchNews();
-                }
-              }
+              onChange={this.handleChange} value={this.props.value}
                />
     
               <label className="label-icon" for="search"><i className="material-icons">search</i></label>

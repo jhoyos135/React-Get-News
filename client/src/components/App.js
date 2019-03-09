@@ -19,7 +19,7 @@ class App extends Component {
       <div className="App container-fluid">
 
       <div className="navbar-fixed">
-       <Nav />
+       <Nav  />
       </div>
 
       <div className="row">
