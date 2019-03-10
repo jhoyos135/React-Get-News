@@ -7,23 +7,6 @@ import newsContext from '../contex/news-context';
 class News extends Component {
 
   static contextType = newsContext;
-  _isMounted = false;
-
-  componentDidMount(){
-    let page = this.context.page.number;
-    let query = this.context.search.query;
-    this.context.getNews(query, page);
-  }
-    componentWillUnmount() {
-      this._isMounted = true;
-    }
-
-    runFun = () => {
-      let page = this.context.page.number;
-      let query = this.context.search.query;
-      this.context.getNews(query,page)
-    }
-
 
   renderItems() {
     let articles = this.context.news1.articles

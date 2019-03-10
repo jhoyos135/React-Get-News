@@ -29,7 +29,6 @@ class App extends Component {
             </a>
             Get News
           </h1>
-          <em>app in development!</em>   
         </header>
 
       <div className="col s12 m9 left_side">
@@ -46,7 +45,7 @@ class App extends Component {
         <div className="footer-copyright">
         <div className="container">
           <div className="row">
-            <div className="col m12">
+            <div className="col m12 text-center">
               <a href="http://juliandhoyos.com" target="_blank">Develop by Julian H.</a>
             </div>
           </div>

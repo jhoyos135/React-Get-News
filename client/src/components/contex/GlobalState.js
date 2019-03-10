@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
 import NewsContext from './news-context';
 
 class GlobalState extends Component {
+
+  _isMounted = false;
 
     state = {
         news1: {
@@ -23,41 +23,55 @@ class GlobalState extends Component {
         }
       };
 
+      componentWillMount() {
+        this._isMounted = true;
+        if(this._isMounted) {
+          console.log('will mount')
+          this.getNews('trending', 1)
+        }
+        this._isMounted = false;
+        console.log('unmounted')
+      }
+      
+      componentWillUpdate(...nextState) {
+        if(this._isMounted === false) {
+        console.log('will update')
+        this._isMounted = true;
+
+        } else {
+          let page = nextState[1].page.number;
+          let query = nextState[1].search.query;
+          this.getNews(query, page)
+          this._isMounted = false;
+          console.log('will not update')
+        }
+    }
+
       getNews = async (values, page) => {
         // console.log(NewQuery)
+        this._isMounted = false;
+
             try {
              
               const url = `https://newsapi.org/v2/everything?q=${values}&sortBy=popularity&page=${page}&apiKey=5e521ee186464149bdab88068f856c3c`;
-              console.log(url)
-              
-                      
-              console.log('running')
+              // console.log(url)      
               let res = await fetch(url);
               let data = await res.json();
               let articles = data.articles;
-              // console.log(data.articles)
-              
-              this.setState({
-                news1: {
-                  articles: articles
-                 }
-              })
 
-             
-                   
-      
+                    this.setState({
+                      news1: {
+                        articles: articles
+                      }
+                    })
+                    console.log('running')
+
             } catch (error) {
                 this.setState({
                   error: true
                 })
             } 
         };
-
-        
-
-        update = () => {
-          
-        }
 
       getSideNews = async () => {
             
@@ -108,7 +122,6 @@ class GlobalState extends Component {
         let next = this.state.page.number;
         let query = this.state.search.query;
     
-        // let search = document.querySelector('#search').value;
         if(query === '') {
           this.setState({
             search: {
@@ -151,17 +164,9 @@ class GlobalState extends Component {
       next = () => {
         this.up();
       }
-      
-
-      componentDidUpdate(...nextState) {
-        process.nextTick( () => {
-          let page = nextState[1].page.number;
-          let query = nextState[1].search.query;
-          this.getNews(query, page)
-        })
-        }
 
   render() {
+
     return (
         <NewsContext.Provider
             value={{

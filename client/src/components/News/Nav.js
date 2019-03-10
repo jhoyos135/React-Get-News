@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 
 import newsContext from '../contex/news-context';
 
-
 class Nav extends Component {
-
-  
 
   static contextType = newsContext;
 
@@ -21,7 +18,6 @@ class Nav extends Component {
           <form>
             <div className="input-field">
               <input id="search" type="search" 
-              // ref = {input => this.query = input}
               placeholder="What news are you looking for?"
               onChange={this.handleChange} value={this.props.value}
                />

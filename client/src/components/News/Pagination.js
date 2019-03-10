@@ -6,14 +6,7 @@ import newsContext from '../contex/news-context';
 class Pagination extends Component {
 
   static contextType = newsContext;
-  _isMounted = false;
 
-componentWillUnmount() {
-    this._isMounted = false;
-  };
-
-  
-  
   render() {
     return (
     <div>
